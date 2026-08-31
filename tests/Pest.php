@@ -7,4 +7,4 @@ require_once __DIR__ . '/stubs/bootstrap.php';
 
 uses()->afterEach(function () {
     \Mockery::close();
-})->in('Unit', 'Integration');
+})->in('Unit');
