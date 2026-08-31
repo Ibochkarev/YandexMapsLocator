@@ -1,0 +1,11 @@
+.DS_Store
+.idea/
+.vscode/
+vendor/
+core/components/yandexmapslocator/vendor/
+.phpunit.result.cache
+.phpunit.cache/
+.php-cs-fixer.cache
+coverage/
+*.transport.zip
+.cache/

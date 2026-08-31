@@ -1,0 +1,6 @@
+YandexMapsLocator 1.0.0-pl
+================================
+
+- Первый релиз: локатор на Яндекс.Картах, геокодирование, поиск, фильтры, JSON и JavaScript API
+- Chunks на Fenom (pdoTools), адаптивный список и карта
+- Extension API для Pro и сторонних extras

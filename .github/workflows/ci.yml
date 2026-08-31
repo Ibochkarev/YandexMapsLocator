@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  php:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.2', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          extensions: json
+      - run: composer install --no-interaction --prefer-dist
+      - run: vendor/bin/pest
+      - run: vendor/bin/phpstan analyse --memory-limit=512M
+      - run: vendor/bin/php-cs-fixer fix --dry-run --diff
