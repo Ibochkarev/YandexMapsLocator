@@ -1,6 +1,58 @@
-YandexMapsLocator 1.0.0-pl
-================================
+# Changelog — YandexMapsLocator
 
-- Первый релиз: локатор на Яндекс.Картах, геокодирование, поиск, фильтры, JSON и JavaScript API
-- Chunks на Fenom (pdoTools), адаптивный список и карта
-- Extension API для Pro и сторонних extras
+Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.0.0/)
+Версии: [Semantic Versioning](https://semver.org/lang/ru/)
+
+## [1.0.0] - 2026-08-31
+
+Первый публичный релиз **YandexMapsLocator** (Free) для MODX Revolution 3. Локатор точек на Яндекс.Картах: одна точка = один ресурс с TV.
+
+Платное расширение **YandexMapsLocatorPro** (REST, `working_now`, CSV, MiniShop3) ставится отдельно поверх Free. Матрица: `docs/free-vs-pro.md`.
+
+### Added
+
+**Локатор на сайте**
+- Сниппет `YandexMapsLocator`: список, карта, поиск по адресу, геолокация («Моё местоположение» / «Все точки»), сортировка по расстоянию, фильтр `category`.
+- AJAX `search.php` (same-origin). Режимы `return=chunks` / `data` / `json`.
+- Chunks на Fenom (pdoTools): `outer`, `search`, `store`, `empty`, `error`. Разметка BEM (`yml-*`), контракт `data-yml-*`.
+- Кнопка маршрута в Яндекс Навигатор, кастомные иконки маркеров и картинки балуна (TV + settings).
+
+**Точки и TV**
+- TV по умолчанию: адрес, координаты, телефон, email, часы работы, категория, balloon image, marker icon.
+- Имена TV переопределяются через `yandexmapslocator_tv_*`.
+- Кнопка геокода адреса в форме ресурса (mgr).
+
+**Карта и настройки**
+- API-ключ Яндекс.Карт (`yandexmapslocator_api_key`) для JS API и HTTP Геокодера.
+- Центр, zoom, кластеризация, радиус, единица расстояния, fallback-картинка балуна, размер иконки маркера.
+- Multi-context: `context` / `ctx`, `yandexmapslocator_default_context`, `yandexmapslocator_allowed_contexts`.
+- `yandexmapslocator_timezone` (IANA, по умолчанию `Europe/Moscow`) для Pro `working_now` / бейджей «Открыто».
+
+**Extension API**
+- События регистрации фильтров и feature providers, хуки prepare Store и search.
+- Хуки сериализации для REST Pro.
+- Frontend modules из capability `pro` (подключение `pro.js`).
+
+**Интерфейс**
+- Mobile-first: табы «Список» / «Карта», desktop — две колонки.
+- CSS-токены на `.yml-locator`, кэш-бастинг ассетов (`?v=`).
+- Карточка: блок meta (статус Pro + часы), дни в `.yml-store__hours-day` через `working_hours_compact_html`.
+- JavaScript API: `search()`, `locate()`, события `store:click`, `marker:click`, `balloon:build`.
+
+**Документация и качество**
+- `docs/`: установка, сниппет, UI, contexts, Extension API, события, Free vs Pro, REST (для Pro).
+- Pest / PHPStan / CI.
+
+### Fixed
+
+- Чанк `store.tpl`: вместо несуществующих в Fenom `| default` и `| raw` — `?:` и `{raw …}` (pdoTools больше не ищет сниппеты `default` / `raw`).
+- `map_config.restApi`: учитывает `api_enabled`. При выключенном REST локатор ходит в `search.php`.
+- `Search.js`: `context` передаётся из опций, без обращения к несуществующему `this.config`.
+
+### Requirements
+
+- PHP 8.2+
+- MODX Revolution 3.x
+- MySQL / MariaDB
+- pdoTools (Fenom-чанки)
+- API-ключ [Яндекс.Карт](https://developer.tech.yandex.ru/) (JS API и HTTP Геокодер)
