@@ -9,7 +9,6 @@ use YandexMapsLocator\Extension\FeatureProviderRegistry;
 use YandexMapsLocator\Extension\LocatorExtensionApi;
 use YandexMapsLocator\Filter\FilterManager;
 use YandexMapsLocator\Geo\GeocoderInterface;
-use YandexMapsLocator\Geo\HaversineDistanceCalculator;
 use YandexMapsLocator\Geo\YandexGeocoder;
 use YandexMapsLocator\Map\MapProviderInterface;
 use YandexMapsLocator\Map\YandexMapsProvider;

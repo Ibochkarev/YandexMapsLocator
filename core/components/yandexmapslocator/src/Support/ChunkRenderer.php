@@ -64,10 +64,6 @@ final class ChunkRenderer
     {
         $output = '';
         foreach ($stores as $store) {
-            if (!$store instanceof Store) {
-                continue;
-            }
-
             $output .= $this->render($tpl, $store->toArray($distanceUnit));
         }
 

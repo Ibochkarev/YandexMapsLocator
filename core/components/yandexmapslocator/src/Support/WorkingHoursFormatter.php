@@ -65,7 +65,7 @@ final class WorkingHoursFormatter
                 continue;
             }
 
-            $lines[] = (self::DAY_LABELS[$key] ?? $key) . ': ' . implode(', ', $normalized);
+            $lines[] = self::DAY_LABELS[$key] . ': ' . implode(', ', $normalized);
         }
 
         return $lines === [] ? $raw : implode(' · ', $lines);
@@ -140,9 +140,7 @@ final class WorkingHoursFormatter
             $current['end'] = $key;
         }
 
-        if ($current !== null) {
-            $groups[] = $current;
-        }
+        $groups[] = $current;
 
         $segments = [];
         foreach ($groups as $group) {
@@ -150,8 +148,8 @@ final class WorkingHoursFormatter
                 continue;
             }
 
-            $startLabel = self::DAY_LABELS[$group['start']] ?? $group['start'];
-            $endLabel = self::DAY_LABELS[$group['end']] ?? $group['end'];
+            $startLabel = self::DAY_LABELS[$group['start']];
+            $endLabel = self::DAY_LABELS[$group['end']];
             $rangeLabel = $group['start'] === $group['end']
                 ? $startLabel
                 : $startLabel . '–' . $endLabel;

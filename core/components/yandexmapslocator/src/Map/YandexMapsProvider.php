@@ -58,9 +58,9 @@ final class YandexMapsProvider implements MapProviderInterface
     private function markerIconSize(): array
     {
         $raw = trim((string) Settings::get($this->modx, 'marker_icon_size', '32,32'));
-        $parts = array_map('trim', explode(',', $raw));
-        $width = isset($parts[0]) ? (int) $parts[0] : 32;
-        $height = isset($parts[1]) ? (int) $parts[1] : 32;
+        $parts = array_map('trim', explode(',', $raw, 2));
+        $width = (int) ($parts[0] !== '' ? $parts[0] : 32);
+        $height = (int) (($parts[1] ?? '') !== '' ? $parts[1] : 32);
 
         if ($width <= 0) {
             $width = 32;

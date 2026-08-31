@@ -1,5 +1,6 @@
 parameters:
     level: 5
+    treatPhpDocTypesAsCertain: false
     paths:
         - core/components/yandexmapslocator/src
     bootstrapFiles:

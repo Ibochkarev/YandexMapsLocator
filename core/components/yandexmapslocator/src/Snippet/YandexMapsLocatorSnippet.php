@@ -7,7 +7,6 @@ namespace YandexMapsLocator\Snippet;
 use MODX\Revolution\modX;
 use YandexMapsLocator\Model\SearchCriteria;
 use YandexMapsLocator\Model\Store;
-use YandexMapsLocator\Support\LocatorService;
 use YandexMapsLocator\YandexMapsLocator;
 
 final class YandexMapsLocatorSnippet extends AbstractSnippet

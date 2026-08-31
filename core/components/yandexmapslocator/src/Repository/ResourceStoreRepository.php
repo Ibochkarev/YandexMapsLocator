@@ -356,9 +356,7 @@ final class ResourceStoreRepository implements StoreRepositoryInterface
         ];
         $response = $this->modx->invokeEvent('OnYandexMapsLocatorBeforeStorePrepare', $params);
         $store = $this->resolveStoreFromEvent($store, $response);
-        if (($params['store'] ?? null) instanceof Store) {
-            $store = $params['store'];
-        }
+        $store = $params['store'];
 
         $params = [
             'store' => &$store,
@@ -366,9 +364,7 @@ final class ResourceStoreRepository implements StoreRepositoryInterface
         ];
         $after = $this->modx->invokeEvent('OnYandexMapsLocatorAfterStorePrepare', $params);
         $store = $this->resolveStoreFromEvent($store, $after);
-        if (($params['store'] ?? null) instanceof Store) {
-            $store = $params['store'];
-        }
+        $store = $params['store'];
 
         return $store;
     }

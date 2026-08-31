@@ -351,9 +351,8 @@ class YandexMapsLocatorPackage
             /** @var modSystemSetting $setting */
             $setting = $this->modx->newObject(modSystemSetting::class);
             $setting->fromArray($payload, '', true, true);
-            if (in_array($name, $preserveValueSettings, true)) {
-                $setting->set('value', null);
-            }
+            // Preserve secrets via UPDATE_OBJECT=false (+ settings resolver). Never set value=null:
+            // modSystemSetting.value is NOT NULL and xPDO logs errors during packaging.
             $vehicle = $this->builder->createVehicle($setting, $vehicleAttributes);
             $this->builder->putVehicle($vehicle);
         }

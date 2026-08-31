@@ -153,6 +153,14 @@ class modX
     }
 }
 
+class modContext
+{
+    public function get(string $key): mixed
+    {
+        return null;
+    }
+}
+
 class modResource
 {
     public function get(string $key): mixed

@@ -2,7 +2,8 @@
 
 /**
  * One-off helper: create balloon/marker TVs and seed resource #2081 for QA.
- * Usage: php _build/resolvers/seed-qa-media.php
+ * Not a transport resolver — run manually:
+ *   php _build/scripts/seed-qa-media.php
  */
 
 declare(strict_types=1);
