@@ -47,4 +47,20 @@ describe('WorkingHoursFormatter', function () {
             ->toContain('09:00-21:00')
             ->not->toContain('<script');
     });
+
+    it('repairs double-encoded utf-8 day-off labels', function () {
+        $broken = mb_convert_encoding('выходной', 'UTF-8', 'ISO-8859-1');
+        $json = json_encode([
+            'mon' => ['09:00-19:00'],
+            'tue' => ['09:00-19:00'],
+            'wed' => ['09:00-19:00'],
+            'thu' => ['09:00-19:00'],
+            'fri' => ['09:00-19:00'],
+            'sat' => ['10:00-17:00'],
+            'sun' => [$broken],
+        ], JSON_UNESCAPED_UNICODE);
+
+        expect(WorkingHoursFormatter::formatCompact((string) $json))
+            ->toBe('Пн–Пт 09:00-19:00 · Сб 10:00-17:00 · Вс выходной');
+    });
 });

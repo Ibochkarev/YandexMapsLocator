@@ -122,6 +122,13 @@ export class StoreListModule {
             meta.appendChild(status);
         }
 
+        if (store.status_hint) {
+            const hint = document.createElement('span');
+            hint.className = `${BEM.storeStatus}-hint`;
+            hint.textContent = String(store.status_hint);
+            meta.appendChild(hint);
+        }
+
         const hoursText = this.resolveHoursText(store);
         if (hoursText) {
             const hours = document.createElement('p');

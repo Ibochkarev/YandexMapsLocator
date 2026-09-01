@@ -38,6 +38,7 @@ require_once $corePath;
 require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
 require_once MODX_CONNECTORS_PATH . 'index.php';
 
+$modx->getUser('mgr', true);
 $modx->lexicon->load('yandexmapslocator:default');
 
 if (!$modx->user || !$modx->hasPermission('save_document')) {

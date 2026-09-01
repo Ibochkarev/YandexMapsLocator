@@ -72,6 +72,8 @@ final class SearchHandler
             'address' => (string) ($query['address'] ?? ''),
             'productId' => (int) ($query['product_id'] ?? $query['productId'] ?? 0),
             'context' => implode(',', $contextKeys),
+            'amenities' => (string) ($query['amenity'] ?? $query['amenities'] ?? ''),
+            'brand' => (string) ($query['brand'] ?? ''),
         ]);
 
         if (!$this->locator->extensionApi()->hasCapability('pro')) {

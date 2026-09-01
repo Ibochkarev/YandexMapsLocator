@@ -91,13 +91,13 @@ $tvs = [
     ],
     'yandexmaps_balloon_image' => [
         'caption' => 'Изображение в балуне',
-        'description' => 'Фото или логотип точки в popup карты (TV типа image).',
+        'description' => 'Фото или логотип для popup на карте. Тип TV: image, кнопка «Обзор» в mgr.',
         'type' => 'image',
         'rank' => 7,
     ],
     'yandexmaps_marker_icon' => [
         'caption' => 'Иконка маркера',
-        'description' => 'Кастомная иконка маркера на карте (TV типа image).',
+        'description' => 'Своя иконка маркера вместо стандартной. PNG ~32×32, тип TV: image.',
         'type' => 'image',
         'rank' => 8,
     ],

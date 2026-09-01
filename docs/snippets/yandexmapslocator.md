@@ -22,6 +22,9 @@
 | `where` | *(пусто)* | JSON-условие для ресурсов (только сниппет; в `search.php` и REST запрещён) |
 | `filters` | *(пусто)* | Имена фильтров через запятую или JSON (например `category`, с Pro — `working_now`) |
 | `category` | *(пусто)* | Значение категории |
+| `brand` | *(пусто)* | Pro: фильтр по TV `yandexmaps_brand` |
+| `amenity` / `amenities` | *(пусто)* | Pro: удобства через запятую |
+| `productId` / `product_id` | *(пусто)* | Pro + MiniShop3: ID товара; сам включает фильтр точек |
 | `return` | `chunks` | `chunks`, `data`, `json` |
 | `latitude`, `longitude` | *(пусто)* | Стартовые координаты для сортировки/радиуса |
 | `address` | *(пусто)* | Адрес для геокодирования на сервере |
@@ -46,8 +49,11 @@ Fenom-переменные из `Store::toArray()`:
 | `{$phone}`, `{$email}`, `{$working_hours}` | Контакты |
 | `{$working_hours_formatted}`, `{$working_hours_compact}` | Расписание (полное и компактное, plain text) |
 | `{$working_hours_compact_html}` | Компактное расписание с днями в `.yml-store__hours-day` (в chunk: `{raw $working_hours_compact_html}`) |
-| `{$is_open_now}` | Pro: открыто ли сейчас (нужны Pro и корректный `yandexmapslocator_timezone`) |
+| `{$is_open_now}` | Pro: открыто ли сейчас (нужны Pro и TZ: TV точки или `yandexmapslocator_timezone`) |
+| `{$status_hint}` | Pro: краткая подсказка к статусу |
+| `{$closes_at}`, `{$next_open_at}` | Pro: ISO-время закрытия / следующего открытия (если есть) |
 | `{$category}` | Категория |
+| `{$brand}`, `{$amenities}` | Pro: бренд и список удобств |
 | `{$balloon_image}`, `{$marker_icon}` | Медиа для балуна и маркера |
 | `{$distance_formatted}` | Расстояние с единицей (если задан центр поиска) |
 | `{$idx}` | Порядковый номер в выборке |

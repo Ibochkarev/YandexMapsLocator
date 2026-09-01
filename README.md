@@ -8,11 +8,11 @@
 
 | Free | Pro |
 |------|-----|
-| Карта, список, поиск, геолокация, категории | REST API v1 (headless) |
-| `search.php`, `return=chunks/data/json` | Фильтр «открыто сейчас», бейджи в UI |
-| Геокод в mgr, Extension API | CSV, MiniShop3 |
+| Карта, список, поиск, геолокация, категории | REST API v1 + `/meta` (headless) |
+| `search.php`, `return=chunks/data/json` | «Открыто сейчас», `status_hint`, amenity/brand |
+| Геокод в mgr, Extension API | CSV + bulk geocode, MiniShop3 |
 
-Pro ставится поверх Free. Без Pro REST и `working_now` недоступны.
+Pro ставится поверх Free. Без Pro REST и `working_now` недоступны. Подробнее: [docs/free-vs-pro.md](docs/free-vs-pro.md).
 
 ## Что нужно
 
@@ -93,6 +93,8 @@ Pro ставится поверх Free. Без Pro REST и `working_now` нед�
 | `return` | `chunks` (по умолчанию), `data`, `json` |
 | `filters` | Список фильтров через запятую или JSON |
 | `category` | Значение категории |
+| `brand`, `amenity` / `amenities` | Pro: бренд и удобства |
+| `productId` / `product_id` | Pro + MiniShop3: ID товара |
 | `context` | MODX context (см. [docs/contexts.md](docs/contexts.md)) |
 
 Полный список: [docs/snippets/yandexmapslocator.md](docs/snippets/yandexmapslocator.md).
@@ -110,6 +112,7 @@ Headless REST только в **YandexMapsLocator Pro**: `/assets/components/yan
 | `?route=api/v1/locations` | Список точек |
 | `?route=api/v1/locations/{id}` | Деталь |
 | `?route=api/v1/geocode` | Геокодирование |
+| `?route=api/v1/meta` | Capabilities, поля, фильтры |
 
 ## JavaScript API
 

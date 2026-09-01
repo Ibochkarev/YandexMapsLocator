@@ -3,51 +3,120 @@
 Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.0.0/)
 Версии: [Semantic Versioning](https://semver.org/lang/ru/)
 
-## [1.0.0] - 2026-08-31
+## [1.0.0-pl7] - 2026-09-01
 
-Первый публичный релиз **YandexMapsLocator** (Free) для MODX Revolution 3. Локатор точек на Яндекс.Картах: одна точка = один ресурс с TV.
+### Fixed
 
-Платное расширение **YandexMapsLocatorPro** (REST, `working_now`, CSV, MiniShop3) ставится отдельно поверх Free. Матрица: `docs/free-vs-pro.md`.
+- `FilterManager`: при `filters=working_now` фильтры `category` и `brand` остаются активны.
+- `FilterManager`: `product_id` включает MS3-фильтр без `filters=minishop_product` (REST и search.php).
+- `FilterManager::describeFilters()` отдаёт meta для Pro REST (`amenity`, `brand`, `minishop_product`).
+- Mgr geocode helper: retry, пока Ext не отрисует TV адреса. В fetch передаётся modAuth.
+- Mgr geocode helper: кнопка под полем адреса в `.modx-tv-form-element`, стили в `mgr-tv-helpers.css`.
+- Балун карты: `balloonMaxWidth` 360px. Кнопка «Построить маршрут» и картинка не обрезаются.
+- `WorkingHoursFormatter`: чинит double-UTF-8 в слотах расписания (например «выходной»).
+- Free connector: `getUser('mgr')` для сессии mgr.
+- Geocode/preview fetch: CSRF через `MODx.siteId`, как у Ext.Ajax в MODX.
+
+## [1.0.0-pl6] - 2026-08-31
+
+### Fixed
+
+- CI: добавлен `phpunit.xml`, чтобы Pest не принимал `--cache-directory` за конфиг.
+- PHPStan и PHP-CS-Fixer: stubs и стиль под зелёный CI.
+- Transport build: настройки без `value=null` (ломало упаковку).
+- `seed-qa-media.php` перенесён из `_build/resolvers/` в `_build/scripts/` и не попадает в transport.
+- Убран пустой Integration suite из PHPUnit.
+
+## [1.0.0-pl5] - 2026-08-31
+
+Тег Git: `1.0.0-pl`. В коде версия пакета: `1.0.0-pl5`.
+
+### Fixed
+
+- `map_config.restApi` смотрит на `api_enabled`. Если REST выключен, локатор ходит в `search.php`.
+- Lexicon и docs: kill switch REST не трогает on-page `search.php`.
+
+## [1.0.0-pl4] - 2026-08-31
+
+### Changed
+
+- Карточка точки: в колонке meta сверху бейдж статуса (Pro), ниже часы.
+- Дни в компактном расписании в `.yml-store__hours-day` (`working_hours_compact_html`, JS `emphasizeWorkingHoursDays`).
+
+## [1.0.0-pl3] - 2026-08-31
 
 ### Added
 
-**Локатор на сайте**
+- Настройка `yandexmapslocator_timezone` (IANA, по умолчанию `Europe/Moscow`) для Pro `working_now` и `is_open_now`. Расписание в TV считается в местном времени сети, не в UTC сервера.
+
+### Fixed
+
+- `Search.js`: `context` берётся из опций. Обращения к несуществующему `this.config` больше нет.
+
+### Docs
+
+- REST: на многих хостингах работайте через `?route=api/v1/…`. PATH_INFO часто не пробрасывается.
+
+## [1.0.0-pl2] - 2026-08-31
+
+### Fixed
+
+- «Моё местоположение» и (Pro) «Только открытые» одной высоты `--yml-control-height-sm`. Тема больше не раздувает locate.
+
+## [1.0.0-pl1] - 2026-08-31
+
+### Changed
+
+- Под формой поиска ряд `.yml-search__tools`: «Моё местоположение» и (в Pro) «Только открытые» в одном flex-ряду.
+- Стили secondary-кнопок поиска: underline у locate, outline у open-now.
+
+## [1.0.0] - 2026-08-31
+
+Первый публичный релиз YandexMapsLocator (Free) для MODX Revolution 3. Локатор точек на Яндекс.Картах. Одна точка = один ресурс с TV.
+
+Платное расширение YandexMapsLocatorPro (REST, `working_now`, CSV, MiniShop3) ставится отдельно поверх Free. Матрица: `docs/free-vs-pro.md`.
+
+### Added
+
+Локатор на сайте
+
 - Сниппет `YandexMapsLocator`: список, карта, поиск по адресу, геолокация («Моё местоположение» / «Все точки»), сортировка по расстоянию, фильтр `category`.
 - AJAX `search.php` (same-origin). Режимы `return=chunks` / `data` / `json`.
 - Chunks на Fenom (pdoTools): `outer`, `search`, `store`, `empty`, `error`. Разметка BEM (`yml-*`), контракт `data-yml-*`.
-- Кнопка маршрута в Яндекс Навигатор, кастомные иконки маркеров и картинки балуна (TV + settings).
+- Кнопка маршрута в Яндекс Навигатор. Свои иконки маркеров и картинки балуна (TV + settings).
 
-**Точки и TV**
+Точки и TV
+
 - TV по умолчанию: адрес, координаты, телефон, email, часы работы, категория, balloon image, marker icon.
-- Имена TV переопределяются через `yandexmapslocator_tv_*`.
+- Имена TV задаются через `yandexmapslocator_tv_*`.
 - Кнопка геокода адреса в форме ресурса (mgr).
 
-**Карта и настройки**
+Карта и настройки
+
 - API-ключ Яндекс.Карт (`yandexmapslocator_api_key`) для JS API и HTTP Геокодера.
 - Центр, zoom, кластеризация, радиус, единица расстояния, fallback-картинка балуна, размер иконки маркера.
 - Multi-context: `context` / `ctx`, `yandexmapslocator_default_context`, `yandexmapslocator_allowed_contexts`.
-- `yandexmapslocator_timezone` (IANA, по умолчанию `Europe/Moscow`) для Pro `working_now` / бейджей «Открыто».
 
-**Extension API**
+Extension API
+
 - События регистрации фильтров и feature providers, хуки prepare Store и search.
 - Хуки сериализации для REST Pro.
 - Frontend modules из capability `pro` (подключение `pro.js`).
 
-**Интерфейс**
-- Mobile-first: табы «Список» / «Карта», desktop — две колонки.
+Интерфейс
+
+- Mobile-first: табы «Список» / «Карта», на desktop две колонки.
 - CSS-токены на `.yml-locator`, кэш-бастинг ассетов (`?v=`).
-- Карточка: блок meta (статус Pro + часы), дни в `.yml-store__hours-day` через `working_hours_compact_html`.
 - JavaScript API: `search()`, `locate()`, события `store:click`, `marker:click`, `balloon:build`.
 
-**Документация и качество**
+Документация и качество
+
 - `docs/`: установка, сниппет, UI, contexts, Extension API, события, Free vs Pro, REST (для Pro).
 - Pest / PHPStan / CI.
 
 ### Fixed
 
-- Чанк `store.tpl`: вместо несуществующих в Fenom `| default` и `| raw` — `?:` и `{raw …}` (pdoTools больше не ищет сниппеты `default` / `raw`).
-- `map_config.restApi`: учитывает `api_enabled`. При выключенном REST локатор ходит в `search.php`.
-- `Search.js`: `context` передаётся из опций, без обращения к несуществующему `this.config`.
+- Чанк `store.tpl`: вместо несуществующих в Fenom `| default` и `| raw` используются `?:` и `{raw …}`. pdoTools больше не ищет сниппеты `default` / `raw`.
 
 ### Requirements
 

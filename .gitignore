@@ -9,3 +9,7 @@ core/components/yandexmapslocator/vendor/
 coverage/
 *.transport.zip
 .cache/
+
+# Local QA fixtures (seed script + generated balloon/marker PNGs)
+_build/scripts/seed-qa-media.php
+assets/components/yandexmapslocator/img/qa/

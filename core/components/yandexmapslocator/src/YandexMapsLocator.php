@@ -22,7 +22,7 @@ use YandexMapsLocator\Support\TvNames;
 
 final class YandexMapsLocator
 {
-    public const VERSION = '1.0.0-pl5';
+    public const VERSION = '1.0.0-pl7';
 
     public modX $modx;
 

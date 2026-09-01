@@ -13,6 +13,7 @@ https://your-site.com/assets/components/yandexmapslocatorpro/api.php
 - `?route=api/v1/locations&parents=5`
 - `?route=api/v1/locations/12`
 - `?route=api/v1/geocode&address=Москва`
+- `?route=api/v1/meta`
 
 ## Nuxt 3 server route (BFF)
 

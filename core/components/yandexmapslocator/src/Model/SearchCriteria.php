@@ -22,6 +22,8 @@ final readonly class SearchCriteria
         public string $address = '',
         public int $productId = 0,
         public string $context = '',
+        public string $amenities = '',
+        public string $brand = '',
     ) {
     }
 
@@ -46,6 +48,8 @@ final readonly class SearchCriteria
             'address' => $props['address'] ?? '',
             'productId' => (int) ($props['productId'] ?? $props['product_id'] ?? 0),
             'context' => $props['context'] ?? $props['contexts'] ?? '',
+            'amenities' => $props['amenities'] ?? $props['amenity'] ?? '',
+            'brand' => $props['brand'] ?? '',
         ]);
     }
 
@@ -74,6 +78,8 @@ final readonly class SearchCriteria
             address: (string) ($data['address'] ?? ''),
             productId: max(0, (int) ($data['productId'] ?? $data['product_id'] ?? 0)),
             context: (string) ($data['context'] ?? $data['contexts'] ?? ''),
+            amenities: (string) ($data['amenities'] ?? $data['amenity'] ?? ''),
+            brand: (string) ($data['brand'] ?? ''),
         );
     }
 
@@ -148,6 +154,8 @@ final readonly class SearchCriteria
             'address' => $this->address,
             'productId' => $this->productId,
             'context' => $this->context,
+            'amenities' => $this->amenities,
+            'brand' => $this->brand,
         ];
     }
 
@@ -172,6 +180,8 @@ final readonly class SearchCriteria
             address: (string) ($overrides['address'] ?? $this->address),
             productId: (int) ($overrides['productId'] ?? $this->productId),
             context: (string) ($overrides['context'] ?? $this->context),
+            amenities: (string) ($overrides['amenities'] ?? $this->amenities),
+            brand: (string) ($overrides['brand'] ?? $this->brand),
         );
     }
 }

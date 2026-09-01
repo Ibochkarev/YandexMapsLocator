@@ -47,7 +47,7 @@ export class SearchModule {
             if (!query.has('fields')) {
                 query.set(
                     'fields',
-                    'id,title,address,latitude,longitude,coordinates,phone,email,working_hours,working_hours_formatted,working_hours_compact,url,category,distance,distance_formatted,balloon_image,marker_icon,is_open_now',
+                    'id,title,address,latitude,longitude,coordinates,phone,email,working_hours,working_hours_formatted,working_hours_compact,url,category,distance,distance_formatted,balloon_image,marker_icon,is_open_now,closes_at,next_open_at,status_hint',
                 );
             }
             url = `${this.apiUrl}?${query.toString()}`;
@@ -142,6 +142,9 @@ export class SearchModule {
             balloon_image: row.balloon_image ?? '',
             marker_icon: row.marker_icon ?? '',
             is_open_now: typeof row.is_open_now === 'boolean' ? row.is_open_now : undefined,
+            closes_at: row.closes_at ?? undefined,
+            next_open_at: row.next_open_at ?? undefined,
+            status_hint: row.status_hint ?? undefined,
         };
     }
 }

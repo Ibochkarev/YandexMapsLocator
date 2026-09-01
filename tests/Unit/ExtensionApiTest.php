@@ -63,6 +63,26 @@ describe('FilterManager category filter', function () {
         expect($result)->toHaveCount(1);
         expect($result[0]->id)->toBe(2);
     });
+
+    it('still applies category when working_now is active', function () {
+        $modx = Mockery::mock(\MODX\Revolution\modX::class);
+        $modx->shouldReceive('invokeEvent')->andReturn([]);
+
+        $manager = new FilterManager($modx);
+        $stores = [
+            new Store(1, 'A', '', '', '/', 'a', 1.0, 1.0, '', '', '', 'food'),
+            new Store(2, 'B', '', '', '/', 'b', 2.0, 2.0, '', '', '', 'shop'),
+        ];
+
+        $criteria = SearchCriteria::fromArray([
+            'category' => 'shop',
+            'filters' => 'working_now',
+        ]);
+        $result = $manager->apply($stores, $criteria);
+
+        expect($result)->toHaveCount(1)
+            ->and($result[0]->id)->toBe(2);
+    });
 });
 
 describe('DistanceFormatter', function () {

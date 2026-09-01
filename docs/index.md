@@ -28,7 +28,7 @@ php _build/build.php
 ## Быстрый старт
 
 1. Создайте контейнер (например, «Магазины») и дочерние ресурсы-точки.
-2. Заполните TV или нажмите «Получить координаты» в форме ресурса (plugin в менеджере).
+2. Заполните TV или нажмите «Получить координаты» под полем адреса на вкладке TV (plugin в менеджере).
 3. Вставьте сниппет на страницу:
 
 ```fenom
@@ -52,7 +52,7 @@ Chunks по умолчанию: `yandexmapslocator.outer`, `.search`, `.store`, 
 | Раздел | Описание |
 |--------|----------|
 | [Free vs Pro](free-vs-pro.md) | Что входит в каждую версию |
-| [REST API v1](api-v1.md) | Pro: `api.php` locations, geocode |
+| [REST API v1](api-v1.md) | Pro: `api.php` locations, geocode, meta |
 | [MODX contexts](contexts.md) | Multi-context search, `&context` |
 | [search.php](ui.md#разделение-free--pro) | AJAX локатора (Free) |
 | [Интерфейс](ui.md) | Список, карта, балун |
@@ -61,7 +61,9 @@ Chunks по умолчанию: `yandexmapslocator.outer`, `.search`, `.store`, 
 
 ## Pro
 
-**YandexMapsLocatorPro**: REST (`?route=`), `working_now` / бейджи «Открыто», CSV, MiniShop3. Перед фильтром «открыто» задайте `yandexmapslocator_timezone`. [free-vs-pro.md](free-vs-pro.md), [compatibility.md](compatibility.md).
+**YandexMapsLocatorPro**: REST (`?route=`, в том числе `/meta`), `working_now`, бейджи и подсказки (`status_hint`, `closes_at`), фильтры `amenity` / `brand`, CSV + bulk geocode, MiniShop3.
+
+Часовой пояс: на точке TV `yandexmaps_timezone`, иначе сеть `yandexmapslocator_timezone`. Подробнее: [free-vs-pro.md](free-vs-pro.md), [compatibility.md](compatibility.md).
 
 ## Системные настройки
 
@@ -79,7 +81,7 @@ Chunks по умолчанию: `yandexmapslocator.outer`, `.search`, `.store`, 
 | `yandexmapslocator_default_balloon_image` | *(пусто)* | Fallback-картинка балуна |
 | `yandexmapslocator_marker_icon_size` | `32,32` | Размер кастомной иконки маркера, px |
 | `yandexmapslocator_default_context` | `web` | Fallback-контекст, если активный недоступен |
-| `yandexmapslocator_timezone` | `Europe/Moscow` | IANA-таймзона сети для Pro `working_now` / `is_open_now` (омская сеть: `Asia/Omsk`) |
+| `yandexmapslocator_timezone` | `Europe/Moscow` | IANA-таймзона сети (fallback), если у точки нет TV `yandexmaps_timezone`. Нужна для Pro `working_now` / `is_open_now` |
 | `yandexmapslocator_allowed_contexts` | *(пусто)* | Белый список context key через запятую. Пусто — любой существующий |
 | `yandexmapslocator_tv_*` | см. README | Имена TV вместо стандартных `yandexmaps_*` |
 

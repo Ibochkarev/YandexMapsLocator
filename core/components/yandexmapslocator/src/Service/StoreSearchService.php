@@ -61,16 +61,35 @@ final class StoreSearchService
 
     private function ensureFilterTvs(SearchCriteria $criteria): SearchCriteria
     {
-        if ($criteria->productId <= 0 && !str_contains($criteria->filters, 'minishop_product')) {
-            return $criteria;
-        }
-
         $tvs = InputParser::list($criteria->includeTVs);
-        if (in_array('ms3_product_id', $tvs, true)) {
-            return $criteria;
+        $changed = false;
+
+        if ($criteria->productId > 0 || str_contains($criteria->filters, 'minishop_product')) {
+            foreach (['ms3_product_id', 'ms3_product_ids'] as $tv) {
+                if (!in_array($tv, $tvs, true)) {
+                    $tvs[] = $tv;
+                    $changed = true;
+                }
+            }
         }
 
-        $tvs[] = 'ms3_product_id';
+        if (InputParser::list($criteria->amenities) !== [] || str_contains($criteria->filters, 'amenity')) {
+            if (!in_array('yandexmaps_amenities', $tvs, true)) {
+                $tvs[] = 'yandexmaps_amenities';
+                $changed = true;
+            }
+        }
+
+        if (trim($criteria->brand) !== '') {
+            if (!in_array('yandexmaps_brand', $tvs, true)) {
+                $tvs[] = 'yandexmaps_brand';
+                $changed = true;
+            }
+        }
+
+        if (!$changed) {
+            return $criteria;
+        }
 
         return $criteria->withIncludeTvs(implode(',', $tvs));
     }

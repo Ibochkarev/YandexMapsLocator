@@ -563,6 +563,8 @@
 /* --- Map balloon (HTML from balloon.js) --- */
 
 .yml-balloon {
+    box-sizing: border-box;
+    max-width: 100%;
     font-size: var(--yml-font-size-md);
     line-height: 1.4;
     color: var(--yml-color-text);
@@ -578,12 +580,13 @@
 
 .yml-balloon__media {
     margin: 0 0 var(--yml-space-sm);
+    max-width: 100%;
 }
 
 .yml-balloon__image {
     display: block;
     width: 100%;
-    max-width: 12.5rem;
+    max-width: 100%;
     height: auto;
     border-radius: var(--yml-radius-sm, 0.25rem);
     object-fit: cover;
@@ -628,10 +631,16 @@
 .yml-balloon__route {
     display: inline-flex;
     align-items: center;
-    min-height: var(--yml-control-height-sm);
+    justify-content: center;
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: var(--yml-control-height-sm, 2rem);
     padding: var(--yml-space-xs) var(--yml-space-md);
     font-size: var(--yml-font-size-md);
     font-weight: 500;
+    line-height: 1.25;
+    white-space: normal;
+    text-align: center;
     text-decoration: none;
     color: var(--yml-color-accent);
     border: 1px solid var(--yml-color-accent);

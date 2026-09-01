@@ -34,18 +34,42 @@ final class FilterManager
     public function apply(array $stores, SearchCriteria $criteria): array
     {
         $active = InputParser::filterNames($criteria->filters);
+        if ($criteria->productId > 0 && isset($this->filters['minishop_product'])) {
+            $active[] = 'minishop_product';
+        }
 
         foreach ($this->filters as $name => $filter) {
-            if ($filter->isOptIn()) {
-                if (!in_array($name, $active, true)) {
-                    continue;
-                }
-            } elseif ($active !== [] && !in_array($name, $active, true)) {
+            if ($filter->isOptIn() && !in_array($name, $active, true)) {
                 continue;
             }
             $stores = $filter->apply($stores, $criteria);
         }
 
         return $stores;
+    }
+
+    /**
+     * @return list<array{name: string, opt_in: bool, param: string}>
+     */
+    public function describeFilters(): array
+    {
+        $params = [
+            'category' => 'category',
+            'brand' => 'brand',
+            'working_now' => 'filters',
+            'minishop_product' => 'filters,product_id',
+            'amenity' => 'amenity',
+        ];
+
+        $result = [];
+        foreach ($this->filters as $name => $filter) {
+            $result[] = [
+                'name' => $name,
+                'opt_in' => $filter->isOptIn(),
+                'param' => $params[$name] ?? 'filters',
+            ];
+        }
+
+        return $result;
     }
 }

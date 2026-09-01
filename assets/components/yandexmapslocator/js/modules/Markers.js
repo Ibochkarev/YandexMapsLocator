@@ -48,7 +48,11 @@ export class MarkersModule {
         });
 
         if (this.config.cluster && this.ymaps.Clusterer) {
-            this.collection = new this.ymaps.Clusterer({ preset: 'islands#invertedRedClusterIcons' });
+            this.collection = new this.ymaps.Clusterer({
+                preset: 'islands#invertedRedClusterIcons',
+                clusterBalloonMaxWidth: 360,
+                clusterBalloonMinWidth: 220,
+            });
             this.collection.add(items);
             this.map.geoObjects.add(this.collection);
         } else {

@@ -115,8 +115,9 @@ Chunk и `StoreList.js` совпадают по разметке.
 | `yml-store__address` | `address` |
 | `yml-store__distance` | `distance_formatted` |
 | `yml-store__phone` | `phone` |
-| `yml-store__meta` | колонка: сначала статус, ниже часы |
+| `yml-store__meta` | колонка: статус, подсказка, часы |
 | `yml-store__status` | Pro: «Открыто» / «Закрыто» (`is_open_now`) |
+| `yml-store__status-hint` | Pro: `status_hint` (например «до 21:00» / «откроется в …») |
 | `yml-store__hours` | `working_hours_compact`. Дни в `.yml-store__hours-day` |
 | `yml-store__select` | «Показать на карте», ширина по тексту |
 | `yml-store__route` | квадрат 32×32, иконка Яндекс Навигатора (`img/yandex-navigator.svg`) |
@@ -145,7 +146,7 @@ Chunk и `StoreList.js` совпадают по разметке.
 
 ## Балун маркера
 
-Сборка в `js/modules/balloon.js`. Поля: изображение (`balloon_image`), адрес, расстояние, телефон, часы, маршрут. Классы `yml-balloon__*`.
+Сборка в `js/modules/balloon.js`. Поля: изображение (`balloon_image`), адрес, расстояние, телефон, часы, маршрут. Классы `yml-balloon__*`. Ширина балуна: `balloonMaxWidth` 360 (чтобы кнопка маршрута и картинка не обрезались).
 
 ### Изображение и иконка
 
@@ -180,8 +181,8 @@ locator.on('marker:options', ({ store, options }) => {
 |--|------|-----|
 | `search.php` | AJAX `locator.js` (same-origin) | fallback |
 | REST `api.php` | — | `?route=api/v1/…` |
-| Бейдж «Открыто» + «Только открытые» | — | `pro.js` + `is_open_now` |
-| `working_now` | — | фильтр. Таймзона: `yandexmapslocator_timezone` |
+| Бейдж «Открыто» + «Только открытые» | — | `pro.js` + `is_open_now` / `status_hint` |
+| `working_now` | — | фильтр. TZ: TV `yandexmaps_timezone` или `yandexmapslocator_timezone` |
 
 При Pro `map_config.restApi = true`, `Search.js` ходит в REST. Без Pro фильтр `working_now` не регистрируется.
 

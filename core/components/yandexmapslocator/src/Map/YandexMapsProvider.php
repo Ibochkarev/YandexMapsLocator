@@ -49,6 +49,9 @@ final class YandexMapsProvider implements MapProviderInterface
     {
         return [
             'preset' => 'islands#redDotIcon',
+            // Default Yandex balloon (~250px) clips «Построить маршрут» + image.
+            'balloonMaxWidth' => 360,
+            'balloonMinWidth' => 220,
         ];
     }
 

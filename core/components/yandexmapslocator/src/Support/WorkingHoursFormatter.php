@@ -57,7 +57,7 @@ final class WorkingHoursFormatter
             }
 
             $normalized = array_values(array_filter(array_map(
-                static fn ($slot) => is_string($slot) ? trim($slot) : '',
+                static fn ($slot) => is_string($slot) ? self::normalizeSlot(trim($slot)) : '',
                 $slots,
             )));
 
@@ -109,7 +109,7 @@ final class WorkingHoursFormatter
             }
 
             $normalized = array_values(array_filter(array_map(
-                static fn ($slot) => is_string($slot) ? trim($slot) : '',
+                static fn ($slot) => is_string($slot) ? self::normalizeSlot(trim($slot)) : '',
                 $slots,
             )));
 
@@ -203,7 +203,7 @@ final class WorkingHoursFormatter
             }
 
             $normalized = array_values(array_filter(array_map(
-                static fn ($slot) => is_string($slot) ? trim($slot) : '',
+                static fn ($slot) => is_string($slot) ? self::normalizeSlot(trim($slot)) : '',
                 $slots,
             )));
 
@@ -228,5 +228,30 @@ final class WorkingHoursFormatter
         }
 
         return true;
+    }
+
+    /**
+     * Repair double-encoded UTF-8 in schedule cells (e.g. «выходной» after bad CSV import).
+     */
+    private static function normalizeSlot(string $value): string
+    {
+        if ($value === '' || preg_match('/[\x{0400}-\x{04FF}]/u', $value) === 1) {
+            return $value;
+        }
+
+        if (preg_match('/[ÐÑ]/u', $value) !== 1) {
+            return $value;
+        }
+
+        $fixed = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if (!mb_check_encoding($fixed, 'UTF-8')) {
+            return $value;
+        }
+
+        if (preg_match('/[\x{0400}-\x{04FF}]/u', $fixed) !== 1) {
+            return $value;
+        }
+
+        return $fixed;
     }
 }

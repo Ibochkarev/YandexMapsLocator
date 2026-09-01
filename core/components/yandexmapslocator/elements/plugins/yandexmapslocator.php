@@ -54,13 +54,30 @@ switch ($modx->event->name) {
             ? LocatorService::get($modx)->getTvNames()->all()
             : (new TvNames($modx))->all();
 
-        $modx->regClientStartupHTMLBlock('<script src="' . $modx->getOption('assets_url') . 'components/yandexmapslocator/js/mgr/geocode.js"></script>');
-        $modx->regClientStartupScript(
-            '<script>window.yandexMapsLocatorMgr = ' . json_encode([
-                'connectorUrl' => $connectorUrl,
-                'tvNames' => $tvNames,
-            ], JSON_UNESCAPED_UNICODE) . ';</script>',
-            true,
+        $tvIds = [];
+        foreach (['address', 'latitude', 'longitude'] as $key) {
+            $tvName = $tvNames[$key] ?? '';
+            if ($tvName === '') {
+                continue;
+            }
+            $tv = $modx->getObject('modTemplateVar', ['name' => $tvName]);
+            if ($tv) {
+                $tvIds[$key] = (int) $tv->get('id');
+            }
+        }
+
+        $configScript = '<script>window.yandexMapsLocatorMgr = ' . json_encode([
+            'connectorUrl' => $connectorUrl,
+            'tvNames' => $tvNames,
+            'tvIds' => $tvIds,
+        ], JSON_UNESCAPED_UNICODE) . ';</script>';
+
+        $version = (string) $modx->getOption('yandexmapslocator.version', null, '1.0.0');
+        $modx->regClientCSS($assetsUrl . 'css/mgr-tv-helpers.css?v=' . rawurlencode($version));
+        $modx->regClientStartupHTMLBlock(
+            $configScript
+            . '<script src="' . $assetsUrl . 'js/mgr/geocode.js?v='
+            . rawurlencode($version) . '" defer></script>',
         );
         break;
 }

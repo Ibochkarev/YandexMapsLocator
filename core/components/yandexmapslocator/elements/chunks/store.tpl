@@ -32,6 +32,9 @@
                     {if $is_open_now}{$ymlOpenLex}{else}{$ymlClosedLex}{/if}
                 </span>
             {/if}
+            {if $status_hint?}
+                <span class="yml-store__status-hint">{$status_hint}</span>
+            {/if}
             {if $ymlShowHours}
                 <p class="yml-store__hours">{if $ymlHoursHtml}{raw $ymlHoursHtml}{else}{$ymlHoursTrim}{/if}</p>
             {/if}
