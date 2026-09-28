@@ -184,7 +184,7 @@ locator.on('marker:options', ({ store, options }) => {
 | Бейдж «Открыто» + «Только открытые» | — | `pro.js` + `is_open_now` / `status_hint` |
 | `working_now` | — | фильтр. TZ: TV `yandexmaps_timezone` или `yandexmapslocator_timezone` |
 
-При Pro `map_config.restApi = true`, `Search.js` ходит в REST. Без Pro фильтр `working_now` не регистрируется.
+При Pro и пустом `api_token` `map_config.restApi = true`, `Search.js` ходит в публичный REST. С заданным `api_token` on-page локатор переключается на same-origin `search.php`: секрет Bearer не попадает в HTML, REST с токеном остаётся для серверных клиентов (Nuxt BFF, свой backend). Без Pro фильтр `working_now` не регистрируется.
 
 ## Форма и ошибки
 

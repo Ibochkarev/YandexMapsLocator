@@ -115,4 +115,4 @@ Pro (через Extension API): `is_open_now`, `status_hint`, `closes_at`, `next
 
 `yandexmapslocator_api_enabled` = No → 503 `api_disabled` на REST. Локатор на странице при этом использует `search.php` (`map_config.restApi = false`).
 
-См. также [api-v1-security.md](api-v1-security.md).
+С заданным `api_token` on-page локатор тоже использует `search.php` (`map_config.restApi = false`): Bearer-токен — серверный секрет и не должен попадать в HTML. REST с токеном — для серверных клиентов (Nuxt BFF, свой backend). См. [api-v1-security.md](api-v1-security.md).

@@ -3,6 +3,16 @@
 Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.0.0/)
 Версии: [Semantic Versioning](https://semver.org/lang/ru/)
 
+## [1.0.0-pl8] - 2026-09-28
+
+### Fixed
+
+- `ResourceStoreRepository::buildResourceQuery()`: JSON из `&where` сниппета мержится с обязательными условиями (`parent`, `published`, `deleted`, контекст) вместо перезаписи. Документированный пример `&where=`{"template":5}` снова фильтрует. Раньше переменная `$where` затиралась массивом обязательных условий, а `$c->where($where)` вызывался дважды (#1).
+- `YandexMapsLocator::getMapConfig()`: Bearer `api_token` больше не попадает в HTML локатора (`<script data-yml-config>`). С заданным токеном on-page локатор переключается на same-origin `search.php` (`map_config.restApi = false`); REST с Bearer остаётся для серверных клиентов (Nuxt BFF, свой backend). Без токена публичный REST на странице работает как раньше (#2).
+- `Search.js` / `locator.js`: убран мёртвый путь `apiToken` — on-page локатор никогда не хранит Bearer и не шлёт `Authorization` в браузере (#2).
+- `SearchHandler` (search.php): при поиске по `address` режется бакет `geocode` (`api_geocode_rate_limit`, 30/мин) — как REST `LocationsController`. Раньше тратился только бакет `search` (120/мин), и геокодер Яндекса звался сверх лимита (#3).
+- `SearchSecurity` больше не `final` — допускает partial-mock для тестов.
+
 ## [1.0.0-pl7] - 2026-09-01
 
 ### Fixed

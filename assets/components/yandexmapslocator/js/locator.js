@@ -34,7 +34,6 @@ export class YandexMapsLocator extends EventEmitter {
             searchUrl: this.config.searchUrl || this.apiUrl,
             apiUrl: this.apiUrl,
             restApi: this.config.restApi === true,
-            apiToken: this.config.apiToken || '',
             context: this.config.context || '',
             i18n: this.i18n,
         });
