@@ -22,7 +22,7 @@ use YandexMapsLocator\Support\TvNames;
 
 final class YandexMapsLocator
 {
-    public const VERSION = '1.0.0-pl7';
+    public const VERSION = '1.0.0-pl8';
 
     public modX $modx;
 
@@ -141,13 +141,20 @@ final class YandexMapsLocator
         );
         $config['restApi'] = $this->extensionApi()->hasCapability('pro') && $apiEnabled;
         if ($config['restApi']) {
-            $proAssetsUrl = rtrim((string) $this->modx->getOption(
-                'yandexmapslocatorpro.assets_url',
-                null,
-                $this->modx->getOption('assets_url') . 'components/yandexmapslocatorpro/',
-            ), '/');
-            $config['apiUrl'] = $proAssetsUrl . '/api.php';
-            $config['apiToken'] = trim((string) Settings::get($this->modx, 'api_token', ''));
+            $apiToken = trim((string) Settings::get($this->modx, 'api_token', ''));
+            if ($apiToken !== '') {
+                // The Bearer token is a server-side secret (Nuxt BFF, custom backend) and must
+                // never leak into page HTML. The on-page locator falls back to same-origin
+                // search.php; short-lived browser tokens are a future feature.
+                $config['restApi'] = false;
+            } else {
+                $proAssetsUrl = rtrim((string) $this->modx->getOption(
+                    'yandexmapslocatorpro.assets_url',
+                    null,
+                    $this->modx->getOption('assets_url') . 'components/yandexmapslocatorpro/',
+                ), '/');
+                $config['apiUrl'] = $proAssetsUrl . '/api.php';
+            }
         }
 
         return $config;

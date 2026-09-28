@@ -5,7 +5,6 @@ export class SearchModule {
      * @param {string} [options.searchUrl]
      * @param {string} [options.apiUrl]
      * @param {boolean} [options.restApi]
-     * @param {string} [options.apiToken]
      * @param {Record<string, string>} [options.i18n]
      */
     constructor(events, options = {}) {
@@ -14,16 +13,13 @@ export class SearchModule {
         this.restApi = options.restApi === true;
         this.searchUrl = (options.searchUrl || options.apiUrl || '').replace(/\/$/, '');
         this.apiUrl = (options.apiUrl || '').replace(/\/$/, '');
-        this.apiToken = typeof options.apiToken === 'string' ? options.apiToken : '';
         this.context = typeof options.context === 'string' ? options.context : '';
     }
 
     headers() {
-        const headers = { Accept: 'application/json' };
-        if (this.restApi && this.apiToken) {
-            headers.Authorization = `Bearer ${this.apiToken}`;
-        }
-        return headers;
+        // The on-page locator never holds a Bearer token: secrets must not leak into HTML.
+        // REST with Bearer is for server-side clients (Nuxt BFF, custom backend).
+        return { Accept: 'application/json' };
     }
 
     /**

@@ -169,7 +169,7 @@ final class ResourceStoreRepository implements StoreRepositoryInterface
     {
         $sortby = $criteria->sortby;
         $sortdir = strtoupper($criteria->sortdir) === 'DESC' ? 'DESC' : 'ASC';
-        $where = InputParser::jsonArray($criteria->where);
+        $userWhere = InputParser::jsonArray($criteria->where);
 
         $c = $this->modx->newQuery(modResource::class);
         $where = [
@@ -180,8 +180,10 @@ final class ResourceStoreRepository implements StoreRepositoryInterface
         $this->applyContextFilter($where, $this->resolveContextKeys($criteria));
         $c->where($where);
 
-        if ($where !== []) {
-            $c->where($where);
+        // Snippet `&where` JSON merges on top of the mandatory conditions
+        // (parent/published/deleted/context). `search.php` and REST reject `where`.
+        if ($userWhere !== []) {
+            $c->where($userWhere);
         }
 
         if ($sortby !== 'distance') {

@@ -11,7 +11,7 @@ use YandexMapsLocator\YandexMapsLocator;
 /**
  * Rate limits and headers for the Free search.php endpoint (same-origin only).
  */
-final class SearchSecurity
+class SearchSecurity
 {
     private RateLimiter $rateLimiter;
 

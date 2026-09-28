@@ -18,13 +18,15 @@ use YandexMapsLocator\YandexMapsLocator;
  */
 final class SearchHandler
 {
-    public function __construct(private readonly YandexMapsLocator $locator)
-    {
+    public function __construct(
+        private readonly YandexMapsLocator $locator,
+        private readonly ?SearchSecurity $security = null,
+    ) {
     }
 
     public function handle(): void
     {
-        $security = new SearchSecurity($this->locator);
+        $security = $this->security ?? new SearchSecurity($this->locator);
         JsonResponse::bindSecurity($security);
 
         if (strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
@@ -75,6 +77,12 @@ final class SearchHandler
             'amenities' => (string) ($query['amenity'] ?? $query['amenities'] ?? ''),
             'brand' => (string) ($query['brand'] ?? ''),
         ]);
+
+        // Address search triggers the Yandex geocoder, so it must consume the
+        // separate `geocode` rate-limit bucket — same as REST LocationsController.
+        if ($criteria->needsGeocoding()) {
+            $security->assertRateLimit('geocode');
+        }
 
         if (!$this->locator->extensionApi()->hasCapability('pro')) {
             $criteria = $criteria->withoutProductId();
