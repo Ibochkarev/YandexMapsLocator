@@ -19,3 +19,5 @@ $_lang['yandexmapslocator_prop_return'] = 'Формат вывода: chunks, da
 $_lang['yandexmapslocator_prop_latitude'] = 'Широта для расчёта расстояния';
 $_lang['yandexmapslocator_prop_longitude'] = 'Долгота для расчёта расстояния';
 $_lang['yandexmapslocator_prop_address'] = 'Адрес для серверного геокодирования';
+$_lang['yandexmapslocator_prop_context'] = 'Контекст MODX';
+$_lang['yandexmapslocator_prop_context_desc'] = 'Ключ контекста MODX или список через запятую. Пусто — текущий контекст.';

@@ -19,3 +19,5 @@ $_lang['yandexmapslocator_prop_return'] = 'Output mode: chunks, data, json';
 $_lang['yandexmapslocator_prop_latitude'] = 'Latitude for distance calculation';
 $_lang['yandexmapslocator_prop_longitude'] = 'Longitude for distance calculation';
 $_lang['yandexmapslocator_prop_address'] = 'Address for server-side geocoding';
+$_lang['yandexmapslocator_prop_context'] = 'MODX Context';
+$_lang['yandexmapslocator_prop_context_desc'] = 'MODX context key or comma-separated list. Empty = current context.';
