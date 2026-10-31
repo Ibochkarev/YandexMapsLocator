@@ -17,4 +17,4 @@
 
 ## REST API и BeforeSearch
 
-`OnYandexMapsLocatorBeforeSearch` вызывается и для snippet, и для REST. После события API повторно применяет `ApiSearchGuard`: parent scope, лимиты, запрет `where`, сброс `product_id` без Pro.
+`OnYandexMapsLocatorBeforeSearch` вызывается и для snippet, и для REST. В REST `ApiSearchGuard` применяется ровно один раз **до** вызова `search()`, поэтому событие видит уже проверенные criteria. Повторного прогона guard нет: ограничения, которые плагин выставит в `where` или `product_id` внутри `BeforeSearch`, в выборку попадут как есть.
