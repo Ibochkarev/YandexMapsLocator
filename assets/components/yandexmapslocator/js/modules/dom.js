@@ -11,8 +11,6 @@ export const BEM = {
     locatorEmpty: 'yml-locator__empty',
     locatorAlert: 'yml-locator__alert',
     search: 'yml-search',
-    searchLabel: 'yml-search__label',
-    searchLabelText: 'yml-search__label-text',
     searchRow: 'yml-search__row',
     searchInput: 'yml-search__input',
     searchSubmit: 'yml-search__submit',
