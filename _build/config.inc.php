@@ -12,7 +12,7 @@ return [
     'name' => 'YandexMapsLocator',
     'name_lower' => 'yandexmapslocator',
     'version' => '1.0.0',
-    'release' => 'pl8',
+    'release' => 'pl9',
     'install' => true,
     'update' => [
         'chunks' => true,

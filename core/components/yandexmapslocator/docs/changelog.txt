@@ -3,6 +3,13 @@
 Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.0.0/)
 Версии: [Semantic Versioning](https://semver.org/lang/ru/)
 
+## [1.0.0-pl9] - 2026-10-31
+
+### Fixed
+
+- `dom.js`: удалены мёртвые BEM-константы `searchLabel` и `searchLabelText`.
+- Lexicon: добавлен отсутствующий `yandexmapslocator_prop_context` (описание параметра `&context`) в `ru` и `en`.
+
 ## [1.0.0-pl8] - 2026-09-28
 
 ### Fixed
